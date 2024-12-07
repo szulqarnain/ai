@@ -1,0 +1,57 @@
+name: fluantigen
+
+services:
+  web-server:
+    build: .
+    container_name: fluantigen-web-server
+    ports:
+      - "8888:8888"
+    depends_on:
+      neo4j-db:
+        condition: service_healthy
+        restart: true
+    env_file:
+      - path: .env
+    attach: false
+
+  neo4j-db:
+    image: "neo4j:4.4-community"
+    container_name: fluantigen-neo4j-db
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j-4-data:/data
+    env_file:
+      - path: .env.neo4j
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+      start_interval: 5s
+    attach: false
+
+  web-interface:
+    build:
+      context: .
+      dockerfile: ./web-interface.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      neo4j-db:
+        condition: service_healthy
+        restart: true
+    attach: false
+
+  # demo-interface:
+  #   build:
+  #     context: .
+  #     dockerfile: ./demo-interface.Dockerfile
+  #   ports:
+  #     - "3000:80"
+  #   attach: false
+
+volumes:
+  neo4j-4-data:
