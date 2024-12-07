@@ -9,9 +9,9 @@ services:
     depends_on:
       neo4j-db:
         condition: service_healthy
-        restart: true
+    restart: always
     env_file:
-      - path: .env
+      - .env
     attach: false
 
   neo4j-db:
@@ -23,14 +23,13 @@ services:
     volumes:
       - neo4j-4-data:/data
     env_file:
-      - path: .env.neo4j
+      - .env.neo4j
     healthcheck:
-      test: wget http://localhost:7474 || exit 1
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:7474"]
       interval: 5s
       timeout: 10s
       retries: 20
       start_period: 20s
-      start_interval: 5s
     attach: false
 
   web-interface:
@@ -42,16 +41,8 @@ services:
     depends_on:
       neo4j-db:
         condition: service_healthy
-        restart: true
+    restart: always
     attach: false
-
-  # demo-interface:
-  #   build:
-  #     context: .
-  #     dockerfile: ./demo-interface.Dockerfile
-  #   ports:
-  #     - "3000:80"
-  #   attach: false
 
 volumes:
   neo4j-4-data:
