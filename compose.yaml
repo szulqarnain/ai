@@ -23,7 +23,7 @@ services:
     volumes:
       - neo4j-4-data:/data
     env_file:
-      - path: .env.neo4j
+      - .env.neo4j
     healthcheck:
       test: wget http://localhost:7474 || exit 1
       interval: 5s
