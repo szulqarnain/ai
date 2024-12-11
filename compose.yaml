@@ -11,7 +11,7 @@ services:
         condition: service_healthy
         restart: true
     env_file:
-      - path: .env
+      - .env
     attach: false
 
   neo4j-db:
