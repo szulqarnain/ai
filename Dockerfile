@@ -2,7 +2,8 @@
 
 FROM ubuntu:16.04
 
-RUN apt-get update
+RUN apt-get update && apt-get install -y tzdata && dpkg-reconfigure -f noninteractive tzdata
+
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends apt-utils
 RUN DEBIAN_FRONTEND=noninteractive \
@@ -36,7 +37,8 @@ RUN rm -rf /tmp/Python-3.5.3.tar.xz /tmp/Python-3.5.3
 WORKDIR /app
 
 COPY flask-import/requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+
+RUN pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r requirements.txt
 
 COPY ./flask-import .
 COPY ./neo4j-import /neo4j-import
