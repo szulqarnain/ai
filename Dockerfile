@@ -1,15 +1,10 @@
-# syntax=docker/dockerfile:1
+# Use the official Python 3.5 slim image
+FROM python:3.5-slim
 
-FROM ubuntu:16.04
-
-RUN apt-get update && apt-get install -y tzdata && dpkg-reconfigure -f noninteractive tzdata
-
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y --no-install-recommends apt-utils
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y --no-install-recommends \
+# Install necessary packages
+RUN apt-get update && apt-get install -y tzdata \
+    && apt-get install -y --no-install-recommends \
             curl \
-            xz-utils \
             build-essential \
             libsqlite3-dev \
             libreadline-dev \
@@ -20,28 +15,24 @@ RUN DEBIAN_FRONTEND=noninteractive \
             libpng-dev \
             libfreetype6-dev \
             libfontconfig1-dev \
-        && apt-get clean \
-        && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /tmp
-RUN curl -O https://www.python.org/ftp/python/3.5.3/Python-3.5.3.tar.xz
-RUN tar -xf Python-3.5.3.tar.xz
-WORKDIR /tmp/Python-3.5.3
-RUN ./configure
-RUN make \
-    && make install
-
-WORKDIR /
-RUN rm -rf /tmp/Python-3.5.3.tar.xz /tmp/Python-3.5.3
-
+# Set the working directory
 WORKDIR /app
 
+# Copy the requirements file
 COPY flask-import/requirements.txt requirements.txt
 
-RUN pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy your app code
 COPY ./flask-import .
 COPY ./neo4j-import /neo4j-import
 
+# Expose the port
 EXPOSE 8888
-CMD ["python3", "webserver.py"]
+
+# Command to run your webserver
+CMD ["python", "webserver.py"]
