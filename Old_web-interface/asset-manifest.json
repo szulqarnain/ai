@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.84683398.css",
+    "main.js": "/static/js/main.1910e409.js",
+    "static/js/453.0432bee1.chunk.js": "/static/js/453.0432bee1.chunk.js",
+    "static/media/graph-guide.png": "/static/media/graph-guide.13b9b384ea282fb897ed.png",
+    "static/media/database-guide.png": "/static/media/database-guide.8affd65a2d961844fcb9.png",
+    "static/media/sample-result-multiple-prediction.png": "/static/media/sample-result-multiple-prediction.6ec9c044ae5c3534626f.png",
+    "static/media/sample-result-similar.png": "/static/media/sample-result-similar.f710e3d1e8049c5334ad.png",
+    "static/media/sample-result-variant.png": "/static/media/sample-result-variant.8ab2556eadb6f1a8aae1.png",
+    "static/media/logo-uf.png": "/static/media/logo-uf.d62aeadbf28dd72ac983.png",
+    "static/media/guide-label.png": "/static/media/guide-label.45e38ea0f7afafc7423f.png",
+    "index.html": "/index.html",
+    "main.84683398.css.map": "/static/css/main.84683398.css.map",
+    "main.1910e409.js.map": "/static/js/main.1910e409.js.map",
+    "453.0432bee1.chunk.js.map": "/static/js/453.0432bee1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.84683398.css",
+    "static/js/main.1910e409.js"
+  ]
+}
